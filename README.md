@@ -350,3 +350,72 @@ public class ConcreteDecoratorB extends Decorator {
 
 - 当需要在不修改现有对象结构的情况下，动态地添加、删除或扩展对象的功能时，可以使用装饰器模式。
 - 当继承关系无法满足系统的需求，或者因为类数量庞大而导致继承关系过于复杂时，装饰器模式提供了一种更灵活的替代方案。
+
+
+
+### 6 适配器模式
+
+> 用于将一个类的接口转换成客户端期望的另一个接口。
+
+#### 6.1 类适配器模式
+
+> 适配器继承了被适配者，同时实现了目标接口
+
+~~~java
+// 目标接口
+public interface Target {
+    void request();
+}
+
+// 被适配者
+public class Adaptee {
+    public void specificRequest() {
+        System.out.println("Adaptee specificRequest");
+    }
+}
+
+// 类适配器
+public class ClassAdapter extends Adaptee implements Target {
+    @Override
+    public void request() {
+        specificRequest();
+    }
+}
+~~~
+
+#### 6.2 对象适配器模式
+
+> 适配器持有一个被适配者的引用，通过调用被适配对象的方法来实现目标接口
+
+~~~java
+// 目标接口
+public interface Target {
+    void request();
+}
+
+// 被适配者
+public class Adaptee {
+    public void specificRequest() {
+        System.out.println("Adaptee specificRequest");
+    }
+}  
+
+// 对象适配器
+public class ObjectAdapter implements Target {
+    private final Adaptee adaptee;
+
+    public ObjectAdapter(Adaptee adaptee) {
+        this.adaptee = adaptee;
+    }
+
+    @Override
+    public void request() {
+        adaptee.specificRequest();
+    }
+}
+~~~
+
+#### 6.3 使用场景
+
+- 当需要使用一个已经存在的类，而其接口不符合需求时，可以使用适配器模式。
+- 当希望创建一个可复用的类，该类可以与其他不相关的类或不可预见的类协同工作时，可以使用适配器模式。
